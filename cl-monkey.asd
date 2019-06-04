@@ -9,4 +9,5 @@
   :depends-on (#:alexandria)
   :components ((:module "src"
                 :components ((:file "package")
-                             (:file "cl-monkey")))))
+                             (:file "cl-monkey")
+                             (:file "token")))))
