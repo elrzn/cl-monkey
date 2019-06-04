@@ -5,15 +5,9 @@
 (deftype token-type (&optional type)
   `(string ,type))
 
-(defclass token ()
-  ((type :initarg :type
-         :reader token-type
-         :type token-type
-         :initform "")
-   (literal :initarg :literal
-            :reader token-literal
-            :type string
-            :initform "")))
+(defstruct token
+  (type "" :type token-type)
+  (literal "" :type string))
 
 (defparameter +token-illegal+ "ILLEGAL")
 (defparameter +token-eof+ "EOF")

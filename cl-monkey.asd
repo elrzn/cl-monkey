@@ -10,4 +10,5 @@
   :components ((:module "src"
                 :components ((:file "package")
                              (:file "cl-monkey")
-                             (:file "token")))))
+                             (:file "token")
+                             (:file "lexer")))))

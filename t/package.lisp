@@ -1,2 +1,4 @@
 (defpackage #:cl-monkey-test
-  (:use #:cl #:prove))
+  (:use #:cl
+        #:cl-monkey
+        #:prove))

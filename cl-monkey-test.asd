@@ -6,7 +6,9 @@
   :license  "MIT"
   :version "0.0.1"
   :serial t
-  :depends-on (#:prove)
+  :depends-on (#:cl-monkey
+               #:prove)
   :components ((:module "t"
                 :components ((:file "package")
-                             (:file "cl-monkey-test")))))
+                             (:file "cl-monkey-test")
+                             (:file "lexer-test")))))
