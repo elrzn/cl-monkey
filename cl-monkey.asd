@@ -6,6 +6,7 @@
   :license  "MIT"
   :version "0.0.1"
   :serial t
-  :depends-on (#:alexandria #:prove)
-  :components ((:file "package")
-               (:file "cl-monkey")))
+  :depends-on (#:alexandria)
+  :components ((:module "src"
+                :components ((:file "package")
+                             (:file "cl-monkey")))))
