@@ -1,7 +1,6 @@
 # cl-monkey
-### _Eric Lorenzana_
 
-This is a project to do ... something.
+A Common Lisp implementation of the Monkey programming language.
 
 ## License
 
