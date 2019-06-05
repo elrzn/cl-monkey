@@ -31,3 +31,15 @@
 ;; Keywords.
 (defparameter +token-function+ "FUNCTION")
 (defparameter +token-let+ "LET")
+
+(defparameter +keywords+
+  (alexandria:plist-hash-table (list "fn" +token-function+
+                                     "let" +token-let+)
+                               :test 'equal)
+  "Lookup table that maps STRING to TOKEN-TYPE.")
+
+(defun lookup-identifier (identifier)
+  "Try to lookup a reserved word in the keyword translation table in a attempt
+to return its TOKEN-TYPE. If not found, default to a regular identifier."
+  (declare (type string identifier))
+  (gethash identifier +keywords+ +token-ident+))

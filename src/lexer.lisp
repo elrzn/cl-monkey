@@ -61,6 +61,26 @@
                    (#\{ (make-token :type +token-lbrace+ :literal "{"))
                    (#\} (make-token :type +token-rbrace+ :literal "}"))
                    (#\+ (make-token :type +token-plus+ :literal "+"))
-                   (0 (make-token :type +token-eof+ :literal ""))))))
+                   (0 (make-token :type +token-eof+ :literal ""))
+                   (otherwise (if (letterp character)
+                                  (let ((literal (lexer-read-identifier lexer)))
+                                    (return-from lexer-next-token
+                                      (make-token :type (lookup-identifier literal)
+                                                  :literal (lexer-read-identifier lexer))))
+                                  (make-token :type +token-illegal+
+                                              :literal (string character))))))))
     (lexer-read-character lexer)
     token))
+
+(defun letterp (c)
+  "Checks whether the given character is considered a letter by the lexer."
+  (or (alpha-char-p c)
+      (char= c #\_ #\! #\?)))
+
+(defmethod lexer-read-identifier ((lexer lexer))
+  "If the current position happens to be a letter, keep evaluating in order to
+capture the full identifier and return it as a STRING."
+  (let ((position (lexer-position lexer)))
+    (loop while (letterp (lexer-character lexer))
+          do (lexer-read-character lexer))
+    (subseq (lexer-input lexer) position (lexer-position lexer))))
