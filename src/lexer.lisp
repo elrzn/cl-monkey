@@ -44,7 +44,7 @@
 
 (defun make-lexer (input)
   "Create an instance of a lexer for the given input."
-  (declare (type (string input)))
+  (declare (type string input))
   (let ((l (make-instance 'lexer :input input)))
     (lexer-read-character l)
     l))
