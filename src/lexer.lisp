@@ -51,6 +51,7 @@
 
 (defmethod lexer-next-token ((lexer lexer))
   "Read and retrieve lexer's next token."
+  (lexer-skip-whitespace lexer)
   (let ((token (with-slots (character) lexer
                  (case character
                    (#\= (make-token :type +token-assign+ :literal "="))
@@ -71,6 +72,11 @@
                                               :literal (string character))))))))
     (lexer-read-character lexer)
     token))
+
+(defmethod lexer-skip-whitespace ((lexer lexer))
+  "Ignore whitespace by reading until a non WHITESPACE character is found."
+  (loop while (typep (lexer-character lexer) 'whitespace)
+        do (lexer-read-character lexer)))
 
 (defun letterp (c)
   "Checks whether the given character is considered a letter by the lexer."
