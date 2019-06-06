@@ -79,7 +79,9 @@
 
 (defun whitespacep (c)
   "Checks whether the given character is considered whitespace by the lexer."
-  (char= c #\Space #\Tab #\Newline))
+  (or (char= c #\Space)
+      (char= c #\Tab)
+      (char= c #\Newline)))
 
 (defmethod lexer-read-identifier ((lexer lexer))
   "If the current position happens to be a letter, keep evaluating in order to
