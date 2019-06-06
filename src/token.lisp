@@ -5,6 +5,12 @@
 (deftype token-type (&optional type)
   `(string ,type))
 
+(deftype letter ()
+  `(satisfies letterp))
+
+(deftype whitespace ()
+  `(satisfies whitespacep))
+
 (defstruct token
   (type "" :type token-type)
   (literal "" :type string))

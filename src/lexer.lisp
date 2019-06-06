@@ -77,6 +77,10 @@
   (or (alpha-char-p c)
       (char= c #\_ #\! #\?)))
 
+(defun whitespacep (c)
+  "Checks whether the given character is considered whitespace by the lexer."
+  (char= c #\Space #\Tab #\Newline))
+
 (defmethod lexer-read-identifier ((lexer lexer))
   "If the current position happens to be a letter, keep evaluating in order to
 capture the full identifier and return it as a STRING."
