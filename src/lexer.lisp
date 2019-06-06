@@ -66,7 +66,7 @@
                                   (let ((literal (lexer-read-identifier lexer)))
                                     (return-from lexer-next-token
                                       (make-token :type (lookup-identifier literal)
-                                                  :literal (lexer-read-identifier lexer))))
+                                                  :literal literal)))
                                   (make-token :type +token-illegal+
                                               :literal (string character))))))))
     (lexer-read-character lexer)
