@@ -64,13 +64,18 @@
                    (#\+ (make-token :type +token-plus+ :literal "+"))
                    (0 (make-token :type +token-eof+ :literal ""))
                    (otherwise (cond
-                                ((letterp character) (let ((literal (lexer-read-identifier lexer)))
-                                                       (return-from lexer-next-token
-                                                         (make-token :type (lookup-identifier literal)
-                                                                     :literal literal))))
-                                ((digit-char-p character) (return-from lexer-next-token
-                                                            (make-token :type +token-int+
-                                                                        :literal (lexer-read-mumber lexer))))
+                                ;; Read literals.
+                                ((letterp character)
+                                 (let ((literal (lexer-read-identifier lexer)))
+                                   (return-from lexer-next-token
+                                     (make-token :type (lookup-identifier literal)
+                                                 :literal literal))))
+                                ;; Read integers.
+                                ((digit-char-p character)
+                                 (return-from lexer-next-token
+                                   (make-token :type +token-int+
+                                               :literal (lexer-read-mumber lexer))))
+                                ;; Default to illegal token.
                                 (t (make-token :type +token-illegal+
                                                :literal (string character)))))))))
     (lexer-read-character lexer)
