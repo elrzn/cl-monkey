@@ -63,13 +63,16 @@
                    (#\} (make-token :type +token-rbrace+ :literal "}"))
                    (#\+ (make-token :type +token-plus+ :literal "+"))
                    (0 (make-token :type +token-eof+ :literal ""))
-                   (otherwise (if (letterp character)
-                                  (let ((literal (lexer-read-identifier lexer)))
-                                    (return-from lexer-next-token
-                                      (make-token :type (lookup-identifier literal)
-                                                  :literal literal)))
-                                  (make-token :type +token-illegal+
-                                              :literal (string character))))))))
+                   (otherwise (cond
+                                ((letterp character) (let ((literal (lexer-read-identifier lexer)))
+                                                       (return-from lexer-next-token
+                                                         (make-token :type (lookup-identifier literal)
+                                                                     :literal literal))))
+                                ((digit-char-p character) (return-from lexer-next-token
+                                                            (make-token :type +token-int+
+                                                                        :literal (lexer-read-mumber lexer))))
+                                (t (make-token :type +token-illegal+
+                                               :literal (string character)))))))))
     (lexer-read-character lexer)
     token))
 
@@ -94,5 +97,13 @@
 capture the full identifier and return it as a STRING."
   (let ((position (lexer-position lexer)))
     (loop while (letterp (lexer-character lexer))
+          do (lexer-read-character lexer))
+    (subseq (lexer-input lexer) position (lexer-position lexer))))
+
+(defmethod lexer-read-mumber ((lexer lexer))
+  "If the current position happens to a digit, keep evaluating in order to
+capture the full number, and return it."
+  (let ((position (lexer-position lexer)))
+    (loop while (digit-char-p (lexer-character lexer))
           do (lexer-read-character lexer))
     (subseq (lexer-input lexer) position (lexer-position lexer))))
