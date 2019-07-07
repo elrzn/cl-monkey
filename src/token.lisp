@@ -25,6 +25,12 @@
 ;; Operators.
 (defparameter +token-assign+ "=")
 (defparameter +token-plus+ "+")
+(defparameter +token-minus+ "-")
+(defparameter +token-bang+ "!")
+(defparameter +token-asterisk+ "*")
+(defparameter +token-slash+ "/")
+(defparameter +token-lt+ "<")
+(defparameter +token-gt+ ">")
 
 ;; Delimeters.
 (defparameter +token-comma+ ",")

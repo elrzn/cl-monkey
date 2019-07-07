@@ -10,7 +10,10 @@ let add = fn(x, y) {
   x + y;
 };
 
-let result = add(five, ten);")
+let result = add(five, ten);
+
+!-/5;
+5 < 10 > 5;")
          (tests '((cl-monkey::+token-let+ . "let")
                   (cl-monkey::+token-ident+ . "five")
                   (cl-monkey::+token-assign+ . "=")
@@ -46,6 +49,17 @@ let result = add(five, ten);")
                   (cl-monkey::+token-comma+ . ",")
                   (cl-monkey::+token-ident+ . "ten")
                   (cl-monkey::+token-rparen+ . ")")
+                  (cl-monkey::+token-semicolon+ . ";")
+                  (cl-monkey::+token-bang+ . "!")
+                  (cl-monkey::+token-minus+ . "-")
+                  (cl-monkey::+token-slash+ . "/")
+                  (cl-monkey::+token-int+ . "5")
+                  (cl-monkey::+token-semicolon+ . ";")
+                  (cl-monkey::+token-int+ . "5")
+                  (cl-monkey::+token-lt+ . "<")
+                  (cl-monkey::+token-int+ . "10")
+                  (cl-monkey::+token-gt+ . ">")
+                  (cl-monkey::+token-int+ . "5")
                   (cl-monkey::+token-semicolon+ . ";")))
          (lexer (cl-monkey::make-lexer input)))
     (dolist (test tests)

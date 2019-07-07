@@ -62,6 +62,12 @@
                    (#\{ (make-token :type +token-lbrace+ :literal "{"))
                    (#\} (make-token :type +token-rbrace+ :literal "}"))
                    (#\+ (make-token :type +token-plus+ :literal "+"))
+                   (#\- (make-token :type +token-minus+ :literal "-"))
+                   (#\! (make-token :type +token-bang+ :literal "!"))
+                   (#\* (make-token :type +token-asterisk+ :literal "*"))
+                   (#\/ (make-token :type +token-slash+ :literal "/"))
+                   (#\< (make-token :type +token-lt+ :literal "<"))
+                   (#\> (make-token :type +token-gt+ :literal ">"))
                    (0 (make-token :type +token-eof+ :literal ""))
                    (otherwise (cond
                                 ;; Read literals.
