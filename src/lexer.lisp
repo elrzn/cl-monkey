@@ -92,18 +92,21 @@
       (char= c #\Tab)
       (char= c #\Newline)))
 
+(defmethod lexer-read-with-character-predicate ((lexer lexer) predicate)
+  "Keep consuming characters from the input as long as the predicate applies.
+Once it doesn't, return the substring of the input that satisfied such
+predicate."
+  (let ((position (lexer-position lexer)))
+    (loop while (funcall predicate (lexer-character lexer))
+          do (lexer-read-character lexer))
+    (subseq (lexer-input lexer) position (lexer-position lexer))))
+
 (defmethod lexer-read-identifier ((lexer lexer))
   "If the current position happens to be a letter, keep evaluating in order to
 capture the full identifier and return it as a STRING."
-  (let ((position (lexer-position lexer)))
-    (loop while (letterp (lexer-character lexer))
-          do (lexer-read-character lexer))
-    (subseq (lexer-input lexer) position (lexer-position lexer))))
+  (lexer-read-from-character-predicate lexer #'letterp))
 
 (defmethod lexer-read-mumber ((lexer lexer))
   "If the current position happens to a digit, keep evaluating in order to
 capture the full number, and return it."
-  (let ((position (lexer-position lexer)))
-    (loop while (digit-char-p (lexer-character lexer))
-          do (lexer-read-character lexer))
-    (subseq (lexer-input lexer) position (lexer-position lexer))))
+  (lexer-read-from-character-predicate lexer #'digit-char-p))
