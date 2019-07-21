@@ -115,9 +115,9 @@ predicate."
 (defmethod lexer-read-identifier ((lexer lexer))
   "If the current position happens to be a letter, keep evaluating in order to
 capture the full identifier and return it as a STRING."
-  (lexer-read-from-character-predicate lexer #'letterp))
+  (lexer-read-with-character-predicate lexer #'letterp))
 
 (defmethod lexer-read-mumber ((lexer lexer))
   "If the current position happens to a digit, keep evaluating in order to
 capture the full number, and return it."
-  (lexer-read-from-character-predicate lexer #'digit-char-p))
+  (lexer-read-with-character-predicate lexer #'digit-char-p))
