@@ -20,6 +20,9 @@ if (5 < 10) {
 } else {
     return false;
 }
+
+10 == 10;
+10 != 10;
 ")
          (tests '((cl-monkey::+token-let+ . "let")
                   (cl-monkey::+token-ident+ . "five")
@@ -84,7 +87,15 @@ if (5 < 10) {
                   (cl-monkey::+token-return+ . "return")
                   (cl-monkey::+token-false+ . "false")
                   (cl-monkey::+token-semicolon+ . ";")
-                  (cl-monkey::+token-rbrace+ . "}")))
+                  (cl-monkey::+token-rbrace+ . "}")
+                  (cl-monkey::+token-int+ . "10")
+                  (cl-monkey::+token-eq+ . "==")
+                  (cl-monkey::+token-int+ . "10")
+                  (cl-monkey::+token-semicolon+ . ";")
+                  (cl-monkey::+token-int+ . "10")
+                  (cl-monkey::+token-not-eq+ . "!=")
+                  (cl-monkey::+token-int+ . "10")
+                  (cl-monkey::+token-semicolon+ . ";")))
          (lexer (cl-monkey::make-lexer input)))
     (dolist (test tests)
       (let* ((token (cl-monkey::lexer-next-token lexer))

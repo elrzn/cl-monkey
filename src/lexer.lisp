@@ -57,7 +57,15 @@
   (lexer-skip-whitespace lexer)
   (let ((token (with-slots (character) lexer
                  (case character
-                   (#\= (make-token :type +token-assign+ :literal "="))
+                   (#\= (if (char= (lexer-peek-character lexer) #\=)
+                            (progn
+                              (let ((current-character character))
+                                (lexer-read-character lexer)
+                                (make-token :type +token-eq+
+                                            :literal (format nil "~a~a"
+                                                             current-character
+                                                             (character (lexer-character lexer))))))
+                            (make-token :type +token-assign+ :literal (string character))))
                    (#\; (make-token :type +token-semicolon+ :literal ";"))
                    (#\( (make-token :type +token-lparen+ :literal "("))
                    (#\) (make-token :type +token-rparen+ :literal ")"))
@@ -66,7 +74,15 @@
                    (#\} (make-token :type +token-rbrace+ :literal "}"))
                    (#\+ (make-token :type +token-plus+ :literal "+"))
                    (#\- (make-token :type +token-minus+ :literal "-"))
-                   (#\! (make-token :type +token-bang+ :literal "!"))
+                   (#\! (if (char= (lexer-peek-character lexer) #\=)
+                            (progn
+                              (let ((current-character character))
+                                (lexer-read-character lexer)
+                                (make-token :type +token-not-eq+
+                                            :literal (format nil "~a~a"
+                                                             current-character
+                                                             (character (lexer-character lexer))))))
+                            (make-token :type +token-assign+ :literal (string character))))
                    (#\* (make-token :type +token-asterisk+ :literal "*"))
                    (#\/ (make-token :type +token-slash+ :literal "/"))
                    (#\< (make-token :type +token-lt+ :literal "<"))

@@ -31,6 +31,8 @@
 (defparameter +token-slash+ "/")
 (defparameter +token-lt+ "<")
 (defparameter +token-gt+ ">")
+(defparameter +token-eq+ "==")
+(defparameter +token-not-eq+ "!=")
 
 ;; Delimeters.
 (defparameter +token-comma+ ",")
