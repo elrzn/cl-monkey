@@ -33,12 +33,15 @@
   (>= (lexer-read-position lexer)
       (length (lexer-input lexer))))
 
+(defmethod lexer-peek-character ((lexer lexer))
+  "Peek at the next character from the lexer's input."
+  (if (lexer-out-of-bounds-p lexer)
+      0
+      (char (lexer-input lexer) (lexer-read-position lexer))))
+
 (defmethod lexer-read-character ((lexer lexer))
   "Consume the lexer's input, reading one character at a time."
-  (setf (lexer-character lexer)
-        (if (lexer-out-of-bounds-p lexer)
-            0
-            (char (lexer-input lexer) (lexer-read-position lexer))))
+  (setf (lexer-character lexer) (lexer-peek-character lexer))
   (setf (lexer-position lexer) (lexer-read-position lexer))
   (incf (lexer-read-position lexer)))
 
