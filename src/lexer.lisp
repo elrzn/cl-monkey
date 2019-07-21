@@ -55,54 +55,49 @@
 (defmethod lexer-next-token ((lexer lexer))
   "Read and retrieve lexer's next token."
   (lexer-skip-whitespace lexer)
-  (let ((token (with-slots (character) lexer
-                 (case character
-                   (#\= (if (char= (lexer-peek-character lexer) #\=)
-                            (progn
-                              (let ((current-character character))
-                                (lexer-read-character lexer)
-                                (make-token :type +token-eq+
-                                            :literal (format nil "~a~a"
-                                                             current-character
-                                                             (character (lexer-character lexer))))))
-                            (make-token :type +token-assign+ :literal (string character))))
-                   (#\; (make-token :type +token-semicolon+ :literal ";"))
-                   (#\( (make-token :type +token-lparen+ :literal "("))
-                   (#\) (make-token :type +token-rparen+ :literal ")"))
-                   (#\, (make-token :type +token-comma+ :literal ","))
-                   (#\{ (make-token :type +token-lbrace+ :literal "{"))
-                   (#\} (make-token :type +token-rbrace+ :literal "}"))
-                   (#\+ (make-token :type +token-plus+ :literal "+"))
-                   (#\- (make-token :type +token-minus+ :literal "-"))
-                   (#\! (if (char= (lexer-peek-character lexer) #\=)
-                            (progn
-                              (let ((current-character character))
-                                (lexer-read-character lexer)
-                                (make-token :type +token-not-eq+
-                                            :literal (format nil "~a~a"
-                                                             current-character
-                                                             (character (lexer-character lexer))))))
-                            (make-token :type +token-assign+ :literal (string character))))
-                   (#\* (make-token :type +token-asterisk+ :literal "*"))
-                   (#\/ (make-token :type +token-slash+ :literal "/"))
-                   (#\< (make-token :type +token-lt+ :literal "<"))
-                   (#\> (make-token :type +token-gt+ :literal ">"))
-                   (0 (make-token :type +token-eof+ :literal ""))
-                   (otherwise (cond
-                                ;; Read literals.
-                                ((letterp character)
-                                 (let ((literal (lexer-read-identifier lexer)))
-                                   (return-from lexer-next-token
-                                     (make-token :type (lookup-identifier literal)
-                                                 :literal literal))))
-                                ;; Read integers.
-                                ((digit-char-p character)
-                                 (return-from lexer-next-token
-                                   (make-token :type +token-int+
-                                               :literal (lexer-read-mumber lexer))))
-                                ;; Default to illegal token.
-                                (t (make-token :type +token-illegal+
-                                               :literal (string character)))))))))
+  (let ((token
+          (with-slots (character) lexer
+            (flet ((augment-token-with-char (token-type next-char)
+                     (when (char= (lexer-peek-character lexer) next-char)
+                       (let ((current-character character))
+                         (lexer-read-character lexer)
+                         (make-token :type token-type
+                                     :literal (format nil "~a~a"
+                                                      current-character
+                                                      (character (lexer-character lexer))))))))
+              (case character
+                (#\= (or (augment-token-with-char +token-eq+ #\=)
+                         (make-token :type +token-assign+ :literal (string character))))
+                (#\; (make-token :type +token-semicolon+ :literal ";"))
+                (#\( (make-token :type +token-lparen+ :literal "("))
+                (#\) (make-token :type +token-rparen+ :literal ")"))
+                (#\, (make-token :type +token-comma+ :literal ","))
+                (#\{ (make-token :type +token-lbrace+ :literal "{"))
+                (#\} (make-token :type +token-rbrace+ :literal "}"))
+                (#\+ (make-token :type +token-plus+ :literal "+"))
+                (#\- (make-token :type +token-minus+ :literal "-"))
+                (#\! (or (augment-token-with-char +token-not-eq+ #\=)
+                         (make-token :type +token-assign+ :literal (string character))))
+                (#\* (make-token :type +token-asterisk+ :literal "*"))
+                (#\/ (make-token :type +token-slash+ :literal "/"))
+                (#\< (make-token :type +token-lt+ :literal "<"))
+                (#\> (make-token :type +token-gt+ :literal ">"))
+                (0 (make-token :type +token-eof+ :literal ""))
+                (otherwise (cond
+                             ;; Read literals.
+                             ((letterp character)
+                              (let ((literal (lexer-read-identifier lexer)))
+                                (return-from lexer-next-token
+                                  (make-token :type (lookup-identifier literal)
+                                              :literal literal))))
+                             ;; Read integers.
+                             ((digit-char-p character)
+                              (return-from lexer-next-token
+                                (make-token :type +token-int+
+                                            :literal (lexer-read-mumber lexer))))
+                             ;; Default to illegal token.
+                             (t (make-token :type +token-illegal+
+                                            :literal (string character))))))))))
     (lexer-read-character lexer)
     token))
 
