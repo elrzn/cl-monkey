@@ -13,7 +13,14 @@ let add = fn(x, y) {
 let result = add(five, ten);
 
 !-/5;
-5 < 10 > 5;")
+5 < 10 > 5;
+
+if (5 < 10) {
+    return true;
+} else {
+    return false;
+}
+")
          (tests '((cl-monkey::+token-let+ . "let")
                   (cl-monkey::+token-ident+ . "five")
                   (cl-monkey::+token-assign+ . "=")
@@ -60,7 +67,24 @@ let result = add(five, ten);
                   (cl-monkey::+token-int+ . "10")
                   (cl-monkey::+token-gt+ . ">")
                   (cl-monkey::+token-int+ . "5")
-                  (cl-monkey::+token-semicolon+ . ";")))
+                  (cl-monkey::+token-semicolon+ . ";")
+                  (cl-monkey::+token-if+ . "if")
+                  (cl-monkey::+token-lparen+ . "(")
+                  (cl-monkey::+token-int+ . "5")
+                  (cl-monkey::+token-lt+ . "<")
+                  (cl-monkey::+token-int+ . "10")
+                  (cl-monkey::+token-rparen+ . ")")
+                  (cl-monkey::+token-lbrace+ . "{")
+                  (cl-monkey::+token-return+ . "return")
+                  (cl-monkey::+token-true+ . "true")
+                  (cl-monkey::+token-semicolon+ . ";")
+                  (cl-monkey::+token-rbrace+ . "}")
+                  (cl-monkey::+token-else+ . "else")
+                  (cl-monkey::+token-lbrace+ . "{")
+                  (cl-monkey::+token-return+ . "return")
+                  (cl-monkey::+token-false+ . "false")
+                  (cl-monkey::+token-semicolon+ . ";")
+                  (cl-monkey::+token-rbrace+ . "}")))
          (lexer (cl-monkey::make-lexer input)))
     (dolist (test tests)
       (let* ((token (cl-monkey::lexer-next-token lexer))

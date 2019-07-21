@@ -43,10 +43,20 @@
 ;; Keywords.
 (defparameter +token-function+ "FUNCTION")
 (defparameter +token-let+ "LET")
+(defparameter +token-true+ "TRUE")
+(defparameter +token-false+ "FALSE")
+(defparameter +token-if+ "IF")
+(defparameter +token-else+ "ELSE")
+(defparameter +token-return+ "RETURN")
 
 (defparameter +keywords+
   (alexandria:plist-hash-table (list "fn" +token-function+
-                                     "let" +token-let+)
+                                     "let" +token-let+
+                                     "true" +token-true+
+                                     "false" +token-false+
+                                     "if" +token-if+
+                                     "else" +token-else+
+                                     "return" +token-return+)
                                :test 'equal)
   "Lookup table that maps STRING to TOKEN-TYPE.")
 
