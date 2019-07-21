@@ -29,18 +29,18 @@
 (defparameter +token-bang+ "!")
 (defparameter +token-asterisk+ "*")
 (defparameter +token-slash+ "/")
-(defparameter +token-lt+ "<")
-(defparameter +token-gt+ ">")
-(defparameter +token-eq+ "==")
-(defparameter +token-not-eq+ "!=")
+(defparameter +token-less-than+ "<")
+(defparameter +token-greater-than+ ">")
+(defparameter +token-equals+ "==")
+(defparameter +token-not-equals+ "!=")
 
 ;; Delimeters.
 (defparameter +token-comma+ ",")
 (defparameter +token-semicolon+ ";")
-(defparameter +token-lparen+ "(")
-(defparameter +token-rparen+ ")")
-(defparameter +token-lbrace+ "{")
-(defparameter +token-rbrace+ "}")
+(defparameter +token-left-parenthesis+ "(")
+(defparameter +token-right-parenthesis+ ")")
+(defparameter +token-left-brace+ "{")
+(defparameter +token-right-brace+ "}")
 
 ;; Keywords.
 (defparameter +token-function+ "FUNCTION")
