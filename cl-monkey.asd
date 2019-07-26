@@ -1,7 +1,7 @@
 ;;;; cl-monkey.asd
 
 (asdf:defsystem #:cl-monkey
-  :description "Describe cl-monkey here"
+  :description "A Common Lisp implementation of the Monkey programming language."
   :author "Eric Lorenzana"
   :license  "MIT"
   :version "0.0.1"
