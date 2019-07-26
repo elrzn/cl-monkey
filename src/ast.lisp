@@ -13,25 +13,22 @@
     :type (cons statement)
     :initform '())))
 
-(defclass identifier (expression)
+(defclass token-owner ()
   ((token
     :initarg :token
     :reader token
     :type token
-    :initform nil)
-   (value
+    :initform nil)))
+
+(defclass identifier (expression token-owner)
+  ((value
     :initarg :value
     :reader value
     :type string
     :initform nil)))
 
-(defclass let-statement (statement)
-  ((token
-    :initarg :token
-    :reader token
-    :type token-type
-    :initform nil)
-   (name
+(defclass let-statement (statement token-owner)
+  ((name
     :initarg :name
     :accessor name
     :type identifier
@@ -56,8 +53,5 @@
       (node-token-literal statement)
     ""))
 
-(defmethod node-token-literal ((self identifier))
-  (token-literal (token self)))
-
-(defmethod node-token-literal ((self let-statement))
+(defmethod node-token-literal ((self token-owner))
   (token-literal (token self)))
