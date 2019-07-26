@@ -11,4 +11,5 @@
                 :components ((:file "package")
                              (:file "cl-monkey")
                              (:file "token")
-                             (:file "lexer")))))
+                             (:file "lexer")
+                             (:file "repl")))))
