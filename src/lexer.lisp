@@ -77,7 +77,7 @@
                  (#\+ (make-token :type +token-plus+ :literal "+"))
                  (#\- (make-token :type +token-minus+ :literal "-"))
                  (#\! (or (augment-token-with-char +token-not-equals+ #\=)
-                          (make-token :type +token-assign+ :literal (string character))))
+                          (make-token :type +token-bang+ :literal (string character))))
                  (#\* (make-token :type +token-asterisk+ :literal "*"))
                  (#\/ (make-token :type +token-slash+ :literal "/"))
                  (#\< (make-token :type +token-less-than+ :literal "<"))
