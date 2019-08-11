@@ -12,4 +12,5 @@
                              (:file "cl-monkey")
                              (:file "token")
                              (:file "lexer")
-                             (:file "repl")))))
+                             (:file "repl")
+                             (:file "ast")))))
