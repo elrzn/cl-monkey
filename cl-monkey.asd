@@ -13,4 +13,5 @@
                              (:file "token")
                              (:file "lexer")
                              (:file "repl")
-                             (:file "ast")))))
+                             (:file "ast")
+                             (:file "parser")))))
